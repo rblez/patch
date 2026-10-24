@@ -1,0 +1,88 @@
+{
+	"name": "PAT",
+	"scopeName": "source.pat",
+	"patterns": [
+		{ "include": "#comment" },
+		{ "include": "#script" },
+		{ "include": "#block" },
+		{ "include": "#expression" },
+		{ "include": "#tag" }
+	],
+	"repository": {
+		"comment": {
+			"name": "comment.block.pat",
+			"begin": "<!--",
+			"end": "-->"
+		},
+		"script": {
+			"begin": "(<)(script)\\b([^>]*)(>)",
+			"beginCaptures": {
+				"1": { "name": "punctuation.definition.tag.begin.pat" },
+				"2": { "name": "entity.name.tag.script.pat" },
+				"3": { "patterns": [{ "include": "#attribute" }] },
+				"4": { "name": "punctuation.definition.tag.end.pat" }
+			},
+			"end": "(</)(script)\\s*(>)",
+			"endCaptures": {
+				"1": { "name": "punctuation.definition.tag.begin.pat" },
+				"2": { "name": "entity.name.tag.script.pat" },
+				"3": { "name": "punctuation.definition.tag.end.pat" }
+			},
+			"contentName": "meta.embedded.block.pat source.ts",
+			"patterns": [{ "include": "source.ts" }]
+		},
+		"block": {
+			"begin": "(\\{)\\s*([#:/@])(if|else\\s+if|else|each|await|then|catch|key|snippet|html|const|debug|render)?\\b",
+			"beginCaptures": {
+				"1": { "name": "punctuation.section.embedded.begin.pat" },
+				"2": { "name": "keyword.control.pat" },
+				"3": { "name": "keyword.control.pat" }
+			},
+			"end": "\\}",
+			"endCaptures": { "0": { "name": "punctuation.section.embedded.end.pat" } },
+			"contentName": "meta.embedded.expression.pat source.ts",
+			"patterns": [
+				{ "match": "\\bas\\b", "name": "keyword.control.pat" },
+				{ "include": "source.ts" }
+			]
+		},
+		"expression": {
+			"begin": "\\{",
+			"beginCaptures": { "0": { "name": "punctuation.section.embedded.begin.pat" } },
+			"end": "\\}",
+			"endCaptures": { "0": { "name": "punctuation.section.embedded.end.pat" } },
+			"contentName": "meta.embedded.expression.pat source.ts",
+			"patterns": [{ "include": "source.ts" }]
+		},
+		"tag": {
+			"begin": "(</?)([A-Za-z][\\w.:-]*)",
+			"beginCaptures": {
+				"1": { "name": "punctuation.definition.tag.begin.pat" },
+				"2": { "name": "entity.name.tag.pat" }
+			},
+			"end": "/?>",
+			"endCaptures": { "0": { "name": "punctuation.definition.tag.end.pat" } },
+			"name": "meta.tag.pat",
+			"patterns": [{ "include": "#attribute" }]
+		},
+		"attribute": {
+			"patterns": [
+				{ "include": "#expression" },
+				{
+					"name": "string.quoted.double.pat",
+					"begin": "\"",
+					"end": "\"",
+					"patterns": [{ "include": "#expression" }]
+				},
+				{
+					"name": "string.quoted.single.pat",
+					"begin": "'",
+					"end": "'",
+					"patterns": [{ "include": "#expression" }]
+				},
+				{ "match": "[A-Za-z_:@][\\w:.@-]*", "name": "entity.other.attribute-name.pat" },
+				{ "match": "=", "name": "punctuation.separator.key-value.pat" }
+			]
+		}
+	}
+}

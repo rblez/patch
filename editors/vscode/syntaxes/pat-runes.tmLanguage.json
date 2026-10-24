@@ -1,0 +1,10 @@
+{
+	"scopeName": "pat.runes",
+	"injectionSelector": "L:source.pat meta.embedded -comment -string",
+	"patterns": [
+		{
+			"match": "\\$(state|derived|effect|style)\\b",
+			"name": "support.function.rune.pat"
+		}
+	]
+}

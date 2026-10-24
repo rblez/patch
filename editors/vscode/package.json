@@ -1,0 +1,63 @@
+{
+	"name": "pat",
+	"displayName": "PAT",
+	"description": "PAT language support: highlighting and compiler diagnostics",
+	"version": "0.0.1",
+	"private": true,
+	"publisher": "local",
+	"engines": {
+		"vscode": "^1.82.0"
+	},
+	"main": "./extension.js",
+	"activationEvents": [],
+	"contributes": {
+		"languages": [
+			{
+				"id": "pat",
+				"aliases": ["PAT"],
+				"extensions": [".pat"],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "pat",
+				"scopeName": "source.pat",
+				"path": "./syntaxes/pat.tmLanguage.json",
+				"embeddedLanguages": {
+					"meta.embedded.block.pat": "typescript",
+					"meta.embedded.expression.pat": "typescript"
+				}
+			},
+			{
+				"scopeName": "pat.runes",
+				"path": "./syntaxes/pat-runes.tmLanguage.json",
+				"injectTo": ["source.pat"]
+			}
+		],
+		"configuration": {
+			"title": "PAT",
+			"properties": {
+				"patch.bun": {
+					"type": "string",
+					"default": "",
+					"description": "Path to bun. Defaults to ~/.bun/bin/bun, then bun on PATH."
+				},
+				"patch.entry": {
+					"type": "string",
+					"default": "",
+					"description": "Path to the patch CLI entry (index.ts). Defaults to the `patch` command installed by `bun link`."
+				}
+			}
+		}
+	},
+	"scripts": {
+		"package": "vsce package --allow-missing-repository --skip-license -o pat.vsix"
+	},
+	"devDependencies": {
+		"@vscode/vsce": "^3.2.2"
+	},
+	"dependencies": {
+		"vscode-languageclient": "^9.0.1"
+	}
+}

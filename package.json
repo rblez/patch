@@ -1,0 +1,27 @@
+{
+  "name": "patch",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "patch": "./src/cli.ts"
+  },
+  "scripts": {
+    "dev": "bun src/cli.ts dev",
+    "build": "bun src/cli.ts build",
+    "snapshot": "bun src/cli.ts snapshot",
+    "lsp": "bun src/cli.ts lsp"
+  },
+  "dependencies": {
+    "fontkit": "^2",
+    "svelte": "^5.57.2",
+    "typescript-api": "npm:typescript@^6.0.3",
+    "vite": "^8.3.4",
+    "vscode-languageserver": "^10.1.2",
+    "vscode-languageserver-textdocument": "^1.0.15"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.3",
+    "@types/fontkit": "^2.0.9",
+    "typescript": "^7.0.2"
+  }
+}
