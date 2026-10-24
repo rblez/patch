@@ -83,6 +83,19 @@ Agents can use HTML snapshots to visually verify the code they write: snapshot t
 
 Since state can be set from outside, an agent can jump straight to the screen it wants to look at instead of clicking through the app, mocking network requests, or seeding a database to get there. The same mechanism is what fixtures are built on.
 
+Test the rendered tree at several states, with no browser: list named cases in `app.test.json`, and `patch test` compares each case against its baseline in `__snapshots__/` next to it, printing a diff of the nodes that moved:
+
+```sh
+patch test app.pat
+patch test app.pat --update   # rewrite the baselines
+```
+
+```json
+{ "cases": [{ "name": "search", "state": { "query": "button" } }] }
+```
+
+A missing baseline is created on the first run; any mismatch fails with exit 1, so it fits in CI.
+
 ### Scope
 
 Patch currently supports apps made of `.pat` components with:
